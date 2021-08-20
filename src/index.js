@@ -1,52 +1,36 @@
-import menuItems from './menu.json';
-// console.log(menuItems);
+import menuList from './menu.json';
+import menuTemplate from './templates/arr.hbs';
 
-const refs = {
-  menu: document.querySelector('.js-menu'),
+import './styles.css';
+
+const root = document.querySelector('.js-menu');
+const markup = menuTemplate(menuList);
+root.insertAdjacentHTML('beforeend', markup);
+// console.log(markup);
+
+const Theme = {
+  LIGHT: 'light-theme',
+  DARK: 'dark-theme',
 };
-// функция добавления меню
+const body = document.querySelector('body');
+const checkbox = document.querySelector('#theme-switch-toggle');
+document.body.classList.add(Theme.LIGHT);
 
-function createMenu(items) {
-  return items
-    .map(({ name, description, image, price, ingredients }) => {
-      return `
-        <li class="menu__item">
-            <article class="card">
-                <img
-                src="${image}"
-                alt="${name}"
-                class="card__image"
-                />
-                <div class="card__content">
-                <h2 class="card__name">${image}</h2>
-                <p class="card__price">
-                    <i class="material-icons"> monetization_on </i>
-                    ${price} кредитов
-                </p>
-
-                <p class="card__descr">${description}</p>
-
-                <ul class="tag-list">
-                    <li class="tag-list__item">${ingredients[0]}</li>
-                    <li class="tag-list__item">${ingredients[1]}</li>
-                    <li class="tag-list__item">${ingredients[2]}</li>
-                    <li class="tag-list__item">${ingredients[3]}</li>
-                    <li class="tag-list__item">${ingredients[4]}</li>
-                    <li class="tag-list__item">${ingredients[5]}</li>
-                </ul>
-                </div>
-
-                <button class="card__button button">
-                <i class="material-icons button__icon"> shopping_cart </i>
-                В корзину
-                </button>
-            </article>
-        </li>
-        `;
-    })
-    .join('');
+if (localStorage.getItem('theme_localStorage')) {
+  document.body.classList.add(Theme.DARK);
+  checkbox.checked = true;
 }
-console.log(createMenu(menuItems));
-
-const menuMarkup = createMenu(menuItems);
-refs.menu.insertAdjacentHTML('beforeend', menuMarkup);
+checkbox.addEventListener('change', checkboxChange);
+function checkboxChange() {
+  if (checkbox.checked) {
+    changeClass(Theme.DARK, Theme.LIGHT);
+    localStorage.setItem('theme_localStorage', JSON.stringify(Theme.DARK));
+    return;
+  }
+  changeClass(Theme.LIGHT, Theme.DARK);
+  localStorage.removeItem('theme_localStorage');
+}
+function changeClass(add, remove) {
+  document.body.classList.add(add);
+  document.body.classList.remove(remove);
+}

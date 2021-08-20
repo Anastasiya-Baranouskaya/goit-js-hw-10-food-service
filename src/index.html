@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -13,7 +12,7 @@
       <!-- Разметка переключателя темы -->
       <div class="theme-switch">
         <svg class="theme-switch__icon" role="img" aria-label="Иконка солнца">
-          <use href="./images/icon-close.svg"></use>
+          <use href="./images/icon-close.svg#sun"></use>
         </svg>
 
         <div class="theme-switch__control">
@@ -29,13 +28,15 @@
         </div>
 
         <svg class="theme-switch__icon" aria-label="Иконка луны">
-          <use href="./images/icon-close.svg"></use>
+          <use href="./images/icon-close.svg#moon"></use>
         </svg>
       </div>
     </div>
+    <!-- temlate -->
 
     <!-- В этот список рендери разметку меню -->
     <ul class="menu js-menu"></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="./index.js"></script>
   </body>
 </html>
